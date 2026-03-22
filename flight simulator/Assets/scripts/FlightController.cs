@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class FlightController : MonoBehaviour
 {
-    [SerializeField] private float pitchSpeed = 15f;   
+    [SerializeField] private float pitchSpeed = -15f;   
     [SerializeField] private float yawSpeed = 20f;      
     [SerializeField] private float rollSpeed = 20f;     
     [SerializeField] private float thrustSpeed = 25f;  
@@ -29,7 +29,7 @@ public class FlightController : MonoBehaviour
         float yawInput = Input.GetAxis("Horizontal");
         float yawAmount = yawInput * yawSpeed * Time.deltaTime;
 
-        
+       
         float rollInput = 0f;
         if (Input.GetKey(KeyCode.Q)) rollInput = 1f;
         if (Input.GetKey(KeyCode.E)) rollInput = -1f;
@@ -37,5 +37,12 @@ public class FlightController : MonoBehaviour
 
         
         transform.Rotate(pitchAmount, yawAmount, rollAmount, Space.Self);
+        
+        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            
+            rb.AddRelativeForce(Vector3.forward * thrustSpeed * Time.deltaTime, ForceMode.VelocityChange);
+        }
     }
 }
