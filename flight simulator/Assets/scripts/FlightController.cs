@@ -6,17 +6,15 @@ using UnityEngine;
 
 public class FlightController : MonoBehaviour
 {
-    [SerializeField] private float pitchSpeed = -20f;   
-    [SerializeField] private float yawSpeed = 15f;      
-    [SerializeField] private float rollSpeed = 45f;     
-    [SerializeField] private float thrustSpeed = 100f;  
+    [SerializeField] private float pitchSpeed = 15f;   
+    [SerializeField] private float yawSpeed = 20f;      
+    [SerializeField] private float rollSpeed = 20f;     
+    [SerializeField] private float thrustSpeed = 25f;  
 
-   
     private Rigidbody rb;
 
     void Start()
     {
-       
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -32,6 +30,12 @@ public class FlightController : MonoBehaviour
         float yawAmount = yawInput * yawSpeed * Time.deltaTime;
 
         
-        transform.Rotate(pitchAmount, yawAmount, 0f, Space.Self);
+        float rollInput = 0f;
+        if (Input.GetKey(KeyCode.Q)) rollInput = 1f;
+        if (Input.GetKey(KeyCode.E)) rollInput = -1f;
+        float rollAmount = rollInput * rollSpeed * Time.deltaTime;
+
+        
+        transform.Rotate(pitchAmount, yawAmount, rollAmount, Space.Self);
     }
 }
